@@ -3,49 +3,65 @@
   <head>
     <meta charset="utf-8">
     <title>Progate</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 30px;
+      }
+
+      h1 {
+        font-size: 2rem; /* makes all h1 bigger */
+      }
+
+      #gyro {
+        font-size: 1.5rem; /* bigger text for gyro data */
+        font-weight: bold;
+        white-space: pre-line; /* preserves line breaks */
+      }
+    </style>
   </head>
-  <link rel="stylesheet" href="stylesheet.css">
   <body>
     <h1 class="title">Finngolia</h1>
     <p>Welcome to the show!</p>
+
+    <h1>Gyroscope Data</h1>
+    <p id="gyro">Waiting for data...</p>
+
+    <script>
+      function startGyroscope() {
+        const gyroElement = document.getElementById("gyro");
+
+        // Some browsers (iOS Safari) require user permission
+        if (typeof DeviceOrientationEvent.requestPermission === "function") {
+          DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+              if (permissionState === "granted") {
+                window.addEventListener("deviceorientation", handleOrientation);
+              } else {
+                gyroElement.innerText = "Permission denied.";
+              }
+            })
+            .catch(console.error);
+        } else {
+          window.addEventListener("deviceorientation", handleOrientation);
+        }
+
+        function handleOrientation(event) {
+          const alpha = event.alpha; // rotation around z-axis
+          const beta = event.beta;   // rotation around x-axis
+          const gamma = event.gamma; // rotation around y-axis
+
+          gyroElement.innerText = 
+            `Alpha (z): ${alpha?.toFixed(2)}°\n` +
+            `Beta  (x): ${beta?.toFixed(2)}°\n` +
+            `Gamma (y): ${gamma?.toFixed(2)}°`;
+        }
+      }
+
+      // Start when page loads
+      startGyroscope();
+    </script>
   </body>
-  <h1>Gyroscope Data</h1>
-  <p id="gyro">Waiting for data...</p>
-
-  <script>
-    function startGyroscope() {
-      const gyroElement = document.getElementById("gyro");
-
-      // Some browsers (iOS Safari) require user permission
-      if (typeof DeviceOrientationEvent.requestPermission === "function") {
-        DeviceOrientationEvent.requestPermission()
-          .then(permissionState => {
-            if (permissionState === "granted") {
-              window.addEventListener("deviceorientation", handleOrientation);
-            } else {
-              gyroElement.innerText = "Permission denied.";
-            }
-          })
-          .catch(console.error);
-      } else {
-        
-        window.addEventListener("deviceorientation", handleOrientation);
-      }
-
-      function handleOrientation(event) {
-        const alpha = event.alpha; // rotation around z-axis
-        const beta = event.beta;   // rotation around x-axis
-        const gamma = event.gamma; // rotation around y-axis
-
-        gyroElement.innerText = 
-          `Alpha (z): ${alpha?.toFixed(2)}°\n` +
-          `Beta  (x): ${beta?.toFixed(2)}°\n` +
-          `Gamma (y): ${gamma?.toFixed(2)}°`;
-      }
-    }
-
-    // Start when page loads
-    startGyroscope();
-  </script>
-</body>
 </html>
