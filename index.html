@@ -1,4 +1,4 @@
-k<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -33,6 +33,23 @@ k<!DOCTYPE html>
       p {
         font-size: 1.5rem; /* bigger normal text */
       }
+
+      button {
+        display: block;           /* forces it onto a new line */
+        margin: 30px auto;        /* centers and adds spacing */
+        padding: 20px 40px;       /* big clickable area */
+        font-size: 2rem;          /* big text */
+        border: none;
+        border-radius: 12px;
+        background: #007acc;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      }
+
+      button:hover {
+        background: #005fa3;
+      }
     </style>
   </head>
   <body>
@@ -42,8 +59,8 @@ k<!DOCTYPE html>
     <h1>Gyroscope Data</h1>
     <p id="gyro">Waiting for data...</p>
 
-     <button onclick="startGyroscope()">Enable Gyroscope</button>
-
+    <!-- 👇 Button is below and big -->
+    <button onclick="startGyroscope()">Enable Gyroscope</button>
 
     <script>
       function startGyroscope() {
@@ -75,11 +92,6 @@ k<!DOCTYPE html>
             `Gamma (y): ${gamma?.toFixed(2)}°`;
         }
       }
-
-      // Start when page loads
     </script>
   </body>
 </html>
-
-
-
